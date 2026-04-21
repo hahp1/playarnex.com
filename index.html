@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Arena – ميدان التحدي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--c1:#00FFD1;--c2:#FF2D78;--c3:#FFD600;--c4:#7B5CFA;--bg:#060610;--bg2:#0B0B1E;--bg3:#0F0F25;--card:#10102A;--card2:#14143A;--txt:#E8E8FF;--txt2:#8888BB;--border:rgba(0,255,209,0.12)}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:'Tajawal',sans-serif;overflow-x:hidden;direction:rtl}
+body::after{content:'';position:fixed;width:500px;height:500px;background:radial-gradient(circle,rgba(0,255,209,0.04) 0%,transparent 70%);border-radius:50%;pointer-events:none;z-index:0;left:var(--mx,50%);top:var(--my,50%);transform:translate(-50%,-50%);transition:left 0.5s,top 0.5s}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:14px 40px;background:rgba(6,6,16,0.85);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--c1),var(--c4));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-weight:900;font-size:1.1rem;color:#060610;box-shadow:0 0 20px rgba(0,255,209,0.4)}
+.logo-text{font-family:'Orbitron',monospace;font-size:1.3rem;font-weight:700;background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.logo-sub{font-size:0.58rem;color:var(--txt2);letter-spacing:3px;display:block;margin-top:-3px;-webkit-text-fill-color:var(--txt2)}
+.nav-r{display:flex;align-items:center;gap:14px}
+.nav-links{display:flex;gap:4px}
+.nav-links a{color:var(--txt2);text-decoration:none;font-size:0.85rem;font-weight:500;padding:7px 14px;border-radius:8px;transition:all 0.3s}
+.nav-links a:hover{color:var(--c1);background:rgba(0,255,209,0.07)}
+.lang-btn{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);color:var(--c1);font-family:'Orbitron',monospace;font-size:0.68rem;padding:7px 14px;border-radius:50px;cursor:pointer;transition:all 0.3s;letter-spacing:1px}
+.lang-btn:hover{border-color:var(--c1);box-shadow:0 0 15px rgba(0,255,209,0.2)}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;padding:100px 24px 60px;text-align:center;overflow:hidden}
+.hgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,255,209,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,209,0.035) 1px,transparent 1px);background-size:55px 55px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 30%,transparent 100%)}
+.horb1{position:absolute;width:800px;height:800px;background:radial-gradient(circle,rgba(0,255,209,0.06) 0%,transparent 65%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.horb2{position:absolute;width:450px;height:450px;background:radial-gradient(circle,rgba(123,92,250,0.05) 0%,transparent 70%);top:15%;right:5%;pointer-events:none}
+.hbadge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,209,0.07);border:1px solid rgba(0,255,209,0.22);color:var(--c1);font-size:0.68rem;letter-spacing:4px;padding:8px 20px;border-radius:50px;margin-bottom:28px;font-family:'Orbitron',monospace;animation:fu 0.8s ease forwards;opacity:0}
+.hbadge::before{content:'▶';font-size:0.5rem;animation:blink 1.5s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+.htitle{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(4rem,13vw,11rem);line-height:0.88;letter-spacing:8px;background:linear-gradient(135deg,#fff 0%,var(--c1) 55%,var(--c4) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;animation:fu 0.8s ease forwards 0.2s;opacity:0;filter:drop-shadow(0 0 50px rgba(0,255,209,0.25))}
+.hsub{font-family:'Tajawal',sans-serif;font-weight:800;font-size:clamp(1.1rem,3.5vw,2rem);color:var(--txt2);letter-spacing:5px;margin-bottom:52px;animation:fu 0.8s ease forwards 0.4s;opacity:0}
+.hsub span{color:var(--c3);-webkit-text-fill-color:var(--c3)}
+.rbox{width:100%;max-width:550px;background:var(--card);border:1px solid rgba(0,255,209,0.18);border-radius:24px;padding:40px 36px;position:relative;overflow:hidden;animation:fu 0.8s ease forwards 0.6s;opacity:0;box-shadow:0 0 80px rgba(0,255,209,0.04),0 30px 80px rgba(0,0,0,0.6)}
+.rbox::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--c1),var(--c4),transparent)}
+.rbox::after{content:'JOIN ROOM';position:absolute;top:14px;left:18px;font-family:'Orbitron',monospace;font-size:0.48rem;color:rgba(0,255,209,0.25);letter-spacing:3px}
+.rlabel{font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:3px;color:var(--txt2);text-align:center;margin-bottom:22px}
+.crow{display:flex;gap:10px;direction:ltr;margin-bottom:14px}
+.cinp{flex:1;background:var(--bg2);border:1.5px solid rgba(255,255,255,0.07);border-radius:14px;padding:18px 16px;color:#fff;font-family:'Orbitron',monospace;font-size:1.7rem;letter-spacing:14px;text-align:center;outline:none;transition:all 0.3s}
+.cinp::placeholder{color:rgba(255,255,255,0.1);font-size:1rem;letter-spacing:8px}
+.cinp:focus{border-color:var(--c1);box-shadow:0 0 0 3px rgba(0,255,209,0.1),0 0 25px rgba(0,255,209,0.1)}
+.cbtn{background:linear-gradient(135deg,var(--c1),#00c9a7);color:#060610;border:none;border-radius:14px;padding:18px 22px;cursor:pointer;font-family:'Orbitron',monospace;font-weight:700;font-size:1.3rem;transition:all 0.3s;min-width:58px}
+.cbtn:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(0,255,209,0.5)}
+.ror{text-align:center;font-size:0.68rem;color:var(--txt2);letter-spacing:4px;font-family:'Orbitron',monospace;margin:14px 0;display:flex;align-items:center;gap:12px}
+.ror::before,.ror::after{content:'';flex:1;height:1px;background:rgba(255,255,255,0.05)}
+.rsub{text-align:center;font-size:0.9rem;color:var(--txt2);line-height:1.75}
+.rsub b{color:var(--c3);-webkit-text-fill-color:var(--c3)}
+.scue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;opacity:0;animation:fi 1s ease forwards 2.2s}
+.scue span{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:3px;color:var(--txt2)}
+.sline{width:1px;height:48px;background:linear-gradient(var(--c1),transparent);animation:sd 1.5s ease-in-out infinite}
+@keyframes sd{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+section{position:relative;z-index:1}
+.w{max-width:1240px;margin:0 auto;padding:0 32px}
+.stag{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:5px;color:var(--c1);text-align:center;margin-bottom:10px}
+.sh{font-family:'Tajawal',sans-serif;font-weight:900;font-size:clamp(1.9rem,5vw,3.6rem);text-align:center;line-height:1.1;margin-bottom:12px}
+.sh em{font-style:normal;color:var(--c1);-webkit-text-fill-color:var(--c1)}
+.sp{text-align:center;color:var(--txt2);font-size:0.97rem;max-width:520px;margin:0 auto 68px;line-height:1.85}
+.stats{padding:52px 0;background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.srow{display:flex;justify-content:center;flex-wrap:wrap}
+.si{flex:1;min-width:130px;text-align:center;padding:18px;position:relative}
+.si+.si::before{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:var(--border)}
+.sn{font-family:'Orbitron',monospace;font-weight:900;font-size:2.8rem;color:var(--c1);text-shadow:0 0 20px rgba(0,255,209,0.35);line-height:1}
+.sl{font-size:0.8rem;color:var(--txt2);margin-top:5px;letter-spacing:1px}
+.arenas{padding:110px 0;background:var(--bg2)}
+.atabs{display:flex;gap:10px;justify-content:center;margin-bottom:52px;flex-wrap:wrap}
+.atab{padding:11px 26px;border-radius:50px;border:1.5px solid rgba(255,255,255,0.1);color:var(--txt2);font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 0.3s;background:transparent;font-family:'Tajawal',sans-serif}
+.atab.ak{background:rgba(123,92,250,0.14);border-color:var(--c4);color:#b09cfc;box-shadow:0 0 20px rgba(123,92,250,0.18)}
+.atab.ag{background:rgba(255,45,120,0.14);border-color:var(--c2);color:#ff7aac;box-shadow:0 0 20px rgba(255,45,120,0.18)}
+.apanel{display:none}.apanel.on{display:block}
+.ahero{border-radius:26px;padding:52px 48px;margin-bottom:44px;position:relative;overflow:hidden;display:flex;align-items:center;gap:52px}
+.ahero.k{background:linear-gradient(135deg,#0C0C26 0%,#141432 100%);border:1px solid rgba(123,92,250,0.28)}
+.ahero.g{background:linear-gradient(135deg,#18080E 0%,#260E1A 100%);border:1px solid rgba(255,45,120,0.28)}
+.ahbg{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-start;padding-right:30px;font-size:15rem;opacity:0.05;pointer-events:none;line-height:1}
+.ahc{flex:1;position:relative;z-index:1}
+.alabl{display:inline-block;padding:5px 15px;border-radius:50px;font-size:0.62rem;letter-spacing:3px;font-family:'Orbitron',monospace;margin-bottom:18px}
+.k .alabl{background:rgba(123,92,250,0.2);color:#a48cfc;border:1px solid rgba(123,92,250,0.3)}
+.g .alabl{background:rgba(255,45,120,0.2);color:#ff7aac;border:1px solid rgba(255,45,120,0.3)}
+.ahtitle{font-family:'Tajawal',sans-serif;font-weight:900;font-size:clamp(1.8rem,3.5vw,3rem);margin-bottom:14px;line-height:1.1}
+.ahdesc{font-size:0.95rem;color:var(--txt2);line-height:1.8;max-width:480px;margin-bottom:24px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);padding:5px 13px;border-radius:8px;font-size:0.78rem;color:var(--txt2)}
+.ahv{flex:0 0 180px;text-align:center;font-size:7rem;filter:drop-shadow(0 0 40px rgba(123,92,250,0.3))}
+.g .ahv{filter:drop-shadow(0 0 40px rgba(255,45,120,0.3))}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:18px}
+.gc{background:var(--card);border-radius:18px;padding:26px;cursor:pointer;border:1px solid rgba(255,255,255,0.05);transition:all 0.4s;position:relative;overflow:hidden}
+.gc::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,255,209,0.025),transparent);opacity:0;transition:0.4s}
+.gc:hover{transform:translateY(-5px);box-shadow:0 18px 55px rgba(0,0,0,0.5)}
+.gc:hover::before{opacity:1}
+.kc:hover{border-color:rgba(123,92,250,0.38)}
+.gcx:hover{border-color:rgba(255,45,120,0.38)}
+.gtop{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.gem{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.65rem;flex-shrink:0}
+.kc .gem{background:rgba(123,92,250,0.14);border:1px solid rgba(123,92,250,0.2)}
+.gcx .gem{background:rgba(255,45,120,0.14);border:1px solid rgba(255,45,120,0.2)}
+.gname{font-size:1.05rem;font-weight:800;margin-bottom:3px}
+.gmode{font-size:0.65rem;color:var(--txt2);letter-spacing:1px;font-family:'Orbitron',monospace}
+.gdesc{font-size:0.84rem;color:var(--txt2);line-height:1.72}
+.gpl{display:flex;align-items:center;gap:6px;margin-top:12px;font-size:0.74rem;color:var(--txt2)}
+.gdot{width:6px;height:6px;border-radius:50%}
+.kc .gdot{background:var(--c4)}.gcx .gdot{background:var(--c2)}
+.gtags{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+.gtag{font-size:0.63rem;padding:3px 9px;border-radius:5px;background:rgba(255,255,255,0.05);color:var(--txt2)}
+.feats{padding:110px 0;background:linear-gradient(180deg,var(--bg) 0%,var(--bg3) 100%)}
+.fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.fc{background:var(--card);border:1px solid rgba(255,255,255,0.055);border-radius:18px;padding:30px;transition:all 0.4s}
+.fc:hover{transform:translateY(-4px);border-color:var(--border)}
+.fic{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:18px}
+.f1 .fic{background:rgba(0,255,209,0.1);border:1px solid rgba(0,255,209,0.14)}
+.f2 .fic{background:rgba(255,214,0,0.1);border:1px solid rgba(255,214,0,0.14)}
+.f3 .fic{background:rgba(123,92,250,0.1);border:1px solid rgba(123,92,250,0.14)}
+.f4 .fic{background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.14)}
+.f5 .fic{background:rgba(0,255,209,0.1);border:1px solid rgba(0,255,209,0.14)}
+.f6 .fic{background:rgba(255,214,0,0.1);border:1px solid rgba(255,214,0,0.14)}
+.fn{font-size:1.05rem;font-weight:800;margin-bottom:9px}
+.fd{font-size:0.85rem;color:var(--txt2);line-height:1.75}
+.dlsec{padding:110px 0;background:radial-gradient(ellipse 100% 60% at 50% 100%,rgba(0,255,209,0.045) 0%,transparent 70%),var(--bg3);text-align:center}
+.dlbtns{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-top:48px}
+.dlb{display:flex;align-items:center;gap:16px;background:var(--card);border:1.5px solid rgba(255,255,255,0.08);border-radius:18px;padding:17px 32px;text-decoration:none;color:var(--txt);transition:all 0.35s;min-width:210px}
+.dlb:hover{border-color:var(--c1);box-shadow:0 0 40px rgba(0,255,209,0.1),0 16px 55px rgba(0,0,0,0.4);transform:translateY(-4px)}
+.dlb.soon{opacity:0.35;pointer-events:none}
+.dlic{font-size:2.3rem}.dlt small{display:block;font-size:0.58rem;color:var(--txt2);letter-spacing:2px;font-family:'Orbitron',monospace}
+.dlt strong{font-size:1.1rem;font-weight:800}
+.dlnote{margin-top:28px;font-size:0.72rem;color:var(--txt2);font-family:'Orbitron',monospace;letter-spacing:2px}
+footer{background:var(--bg);border-top:1px solid rgba(255,255,255,0.05);padding:80px 0 0}
+.fg{max-width:1240px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:44px;margin-bottom:60px}
+.fbrand p{font-size:0.84rem;color:var(--txt2);line-height:1.8;margin-top:14px;max-width:255px}
+.flogo{font-family:'Orbitron',monospace;font-weight:900;font-size:1.75rem;background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.fct{font-size:0.68rem;letter-spacing:3px;color:var(--txt2);font-family:'Orbitron',monospace;margin-bottom:18px}
+.fl{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fl a{color:var(--txt2);text-decoration:none;font-size:0.87rem;transition:color 0.2s;display:flex;align-items:center;gap:7px}
+.fl a::before{content:'›';color:var(--c1);font-size:1.1rem}
+.fl a:hover{color:var(--c1)}
+.socrow{display:flex;gap:9px;margin-top:22px}
+.soc{width:38px;height:38px;background:var(--card);border:1px solid rgba(255,255,255,0.07);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--txt2);font-size:0.9rem;cursor:pointer;transition:all 0.3s;text-decoration:none}
+.soc:hover{border-color:var(--c1);color:var(--c1);background:rgba(0,255,209,0.07)}
+/* ARNEX STUDIO BADGE */
+.arnex-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,209,0.05);border:1px solid rgba(0,255,209,0.15);border-radius:10px;padding:8px 16px;text-decoration:none;transition:all 0.3s;margin-top:20px}
+.arnex-badge:hover{border-color:var(--c1);background:rgba(0,255,209,0.1)}
+.arnex-badge-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:0.85rem;background:linear-gradient(90deg,var(--c1),var(--c4));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.arnex-badge-sub{font-size:0.7rem;color:var(--txt2);-webkit-text-fill-color:var(--txt2)}
+.fbot{border-top:1px solid rgba(255,255,255,0.05);padding:20px 32px;max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.fcp{font-size:0.7rem;color:var(--txt2);font-family:'Orbitron',monospace;letter-spacing:0.5px}
+.fcp a{color:var(--c1);text-decoration:none}
+.flg{display:flex;gap:18px}
+.flg a{font-size:0.7rem;color:var(--txt2);text-decoration:none;transition:color 0.2s;font-family:'Orbitron',monospace}
+.flg a:hover{color:var(--c1)}
+.mov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.86);backdrop-filter:blur(18px);z-index:9999;align-items:center;justify-content:center}
+.mov.on{display:flex}
+.mbox{background:var(--card2);border:1px solid rgba(0,255,209,0.22);border-radius:24px;padding:44px 38px;max-width:400px;width:90%;text-align:center;animation:pi 0.3s ease}
+@keyframes pi{from{transform:scale(0.88);opacity:0}to{transform:scale(1);opacity:1}}
+.mic{font-size:2.8rem;margin-bottom:14px}.mtt{font-size:1.25rem;font-weight:800;margin-bottom:8px}
+.mtx{font-size:0.88rem;color:var(--txt2);line-height:1.72;margin-bottom:24px}
+.mbtn{background:linear-gradient(135deg,var(--c1),#00c9a7);color:#060610;border:none;border-radius:11px;padding:13px 32px;font-family:'Tajawal',sans-serif;font-weight:800;font-size:0.97rem;cursor:pointer;transition:all 0.3s}
+.mbtn:hover{box-shadow:0 0 25px rgba(0,255,209,0.4)}
+.rv{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+@keyframes fu{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+[data-en]{display:none}
+body.en [data-ar]{display:none!important}
+body.en [data-en]{display:revert!important}
+body.en{direction:ltr}
+@media(max-width:960px){.fg{grid-template-columns:1fr 1fr;gap:28px}.ahero{flex-direction:column;padding:36px 28px}.ahv{font-size:4rem}.fgrid{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){nav{padding:12px 18px}.nav-links{display:none}.htitle{font-size:3.8rem}.fg{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<nav>
+  <div class="logo">
+    <div class="logo-mark">A</div>
+    <div>
+      <span class="logo-text">ARENA</span>
+      <span class="logo-sub" data-ar>ميدان التحدي</span>
+      <span class="logo-sub" data-en>THE CHALLENGE ARENA</span>
+    </div>
+  </div>
+  <div class="nav-r">
+    <div class="nav-links">
+      <a href="#arenas" data-ar>الميادين</a><a href="#arenas" data-en>Arenas</a>
+      <a href="#feats" data-ar>المميزات</a><a href="#feats" data-en>Features</a>
+      <a href="#dl" data-ar>التحميل</a><a href="#dl" data-en>Download</a>
+    </div>
+    <button class="lang-btn" onclick="tl()" id="lbtn"><span id="lf">🇸🇦</span><span id="ll">EN</span></button>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="hgrid"></div><div class="horb1"></div><div class="horb2"></div>
+  <div class="hbadge" data-ar>منصة المنافسة العربية</div>
+  <div class="hbadge" data-en>ARABIC COMPETITIVE PLATFORM</div>
+  <h1 class="htitle">ARENA</h1>
+  <p class="hsub" data-ar>ميدان <span>التحدي</span></p>
+  <p class="hsub" data-en style="font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:5px">THE&nbsp;<span>CHALLENGE</span>&nbsp;ARENA</p>
+  <div class="rbox">
+    <div class="rlabel" data-ar>أدخل كود الغرفة للانضمام</div>
+    <div class="rlabel" data-en>ENTER ROOM CODE TO JOIN</div>
+    <div class="crow">
+      <input class="cinp" id="ci" type="text" maxlength="6" placeholder="· · · · · ·"
+        oninput="this.value=this.value.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6)"
+        autocomplete="off" spellcheck="false"/>
+      <button class="cbtn" onclick="dj()">→</button>
+    </div>
+    <div class="ror"><span data-ar>أو</span><span data-en>OR</span></div>
+    <p class="rsub" data-ar>ما عندك كود؟ <b>حمّل التطبيق</b> وافتح غرفة جديدة — الكود يجيك تلقائي</p>
+    <p class="rsub" data-en>No code? <b>Download the app</b> and open a room — get your code instantly</p>
+  </div>
+  <div class="scue"><span data-ar>اكتشف أكثر</span><span data-en>EXPLORE</span><div class="sline"></div></div>
+</section>
+
+<div class="stats">
+  <div class="srow">
+    <div class="si"><div class="sn">2</div><div class="sl" data-ar>ميدان</div><div class="sl" data-en>Arenas</div></div>
+    <div class="si"><div class="sn">12+</div><div class="sl" data-ar>لعبة</div><div class="sl" data-en>Games</div></div>
+    <div class="si"><div class="sn">50+</div><div class="sl" data-ar>فئة سؤال</div><div class="sl" data-en>Categories</div></div>
+    <div class="si"><div class="sn">∞</div><div class="sl" data-ar>متعة</div><div class="sl" data-en>Fun</div></div>
+  </div>
+</div>
+
+<section class="arenas" id="arenas">
+<div class="w">
+  <p class="stag" data-ar>الميادين</p><p class="stag" data-en>THE ARENAS</p>
+  <h2 class="sh" data-ar>اختر <em>ميدانك</em></h2><h2 class="sh" data-en>Choose Your <em>Arena</em></h2>
+  <p class="sp" data-ar>ميدانان مختلفان — كل واحد تجربة فريدة من نوعها</p>
+  <p class="sp" data-en>Two distinct arenas — each a unique experience of its own</p>
+  <div class="atabs">
+    <button class="atab ak" id="tbk" onclick="sa('k')" data-ar>🧠 ميدان المعلومات</button>
+    <button class="atab ak" id="tbk2" onclick="sa('k')" data-en>🧠 Knowledge Arena</button>
+    <button class="atab" id="tbg" onclick="sa('g')" data-ar>🎮 ميدان الألعاب</button>
+    <button class="atab" id="tbg2" onclick="sa('g')" data-en>🎮 Games Arena</button>
+  </div>
+  <div class="apanel on" id="pk">
+    <div class="ahero k rv"><div class="ahbg">🧠</div><div class="ahc"><span class="alabl" data-ar>ميدان المعلومات</span><span class="alabl" data-en>KNOWLEDGE ARENA</span><h3 class="ahtitle" data-ar>تحدّ معلوماتك وثقافتك</h3><h3 class="ahtitle" data-en>Challenge Your Knowledge</h3><p class="ahdesc" data-ar>أسئلة متنوعة في أكثر من 50 فئة — من التاريخ والعلوم إلى الأفلام والرياضة. العب مع فريقك أو ضد منافسين أونلاين.</p><p class="ahdesc" data-en>Diverse questions in 50+ categories — from history and science to movies and sports. Play with your team or against online competitors.</p><div class="chips"><span class="chip" data-ar>👥 فريق ضد فريق</span><span class="chip" data-en>👥 Team vs Team</span><span class="chip" data-ar>🎯 فردي</span><span class="chip" data-en>🎯 Solo</span><span class="chip" data-ar>🌐 أونلاين</span><span class="chip" data-en>🌐 Online</span></div></div><div class="ahv">🧠</div></div>
+    <div class="ggrid">
+      <div class="gc kc rv"><div class="gtop"><div class="gem">🏆</div><div><div class="gname" data-ar>الوضع الكلاسيكي</div><div class="gname" data-en>Classic Mode</div><div class="gmode" data-ar>فريقين</div><div class="gmode" data-en>TWO TEAMS</div></div></div><div class="gdesc" data-ar>الوضع الأصلي — الفريق يناقش ويختار الإجابة الصح. مناسب للتجمعات العائلية والأصدقاء.</div><div class="gdesc" data-en>Original mode — teams discuss and choose the correct answer. Perfect for family and friends gatherings.</div><div class="gpl"><div class="gdot"></div><span data-ar>فريقين • لا حد للاعبين</span><span data-en>2 teams • unlimited players</span></div></div>
+      <div class="gc kc rv"><div class="gtop"><div class="gem">🎯</div><div><div class="gname" data-ar>الوضع الفردي</div><div class="gname" data-en>Solo Mode</div><div class="gmode" data-ar>تحدي شخصي</div><div class="gmode" data-en>PERSONAL CHALLENGE</div></div></div><div class="gdesc" data-ar>تنافس مع نفسك! اختبر معلوماتك في الفئات اللي تحبها وتابع تقدمك.</div><div class="gdesc" data-en>Compete with yourself! Test your knowledge in your favorite categories and track progress.</div><div class="gpl"><div class="gdot"></div><span data-ar>لاعب واحد • أي وقت</span><span data-en>1 player • anytime</span></div></div>
+      <div class="gc kc rv"><div class="gtop"><div class="gem">🌐</div><div><div class="gname" data-ar>أونلاين</div><div class="gname" data-en>Online Mode</div><div class="gmode" data-ar>مع أصدقاء بعيدين</div><div class="gmode" data-en>REMOTE FRIENDS</div></div></div><div class="gdesc" data-ar>العب مع أصدقائك أينما كانوا — أنشئ غرفة وشارك الكود وابدأ في ثوانٍ.</div><div class="gdesc" data-en>Play with friends wherever they are — create a room, share the code, start in seconds.</div><div class="gpl"><div class="gdot"></div><span data-ar>2-8 لاعبين • أونلاين</span><span data-en>2-8 players • online</span></div></div>
+
+      <div class="gc kc rv"><div class="gtop"><div class="gem">📚</div><div><div class="gname" data-ar>50+ فئة</div><div class="gname" data-en>50+ Categories</div><div class="gmode" data-ar>محتوى ضخم</div><div class="gmode" data-en>MASSIVE CONTENT</div></div></div><div class="gdesc" data-ar>تاريخ، جغرافيا، علوم، رياضة، أفلام، مسلسلات، أنيمي، دين، قرآن، موسيقى وأكثر.</div><div class="gdesc" data-en>History, geography, science, sports, movies, series, anime, religion, Quran, music and more.</div><div class="gpl"><div class="gdot"></div><span data-ar>آلاف الأسئلة</span><span data-en>Thousands of questions</span></div></div>
+      <div class="gc kc rv" style="border-color:rgba(0,255,209,0.12)"><div class="gtop"><div class="gem" style="background:rgba(0,255,209,0.1);border:1px solid rgba(0,255,209,0.18)">📺</div><div><div class="gname" data-ar>وضع الشاشة الكبيرة</div><div class="gname" data-en>Big Screen Mode</div><div class="gmode" data-ar>تلفزيون + هواتف</div><div class="gmode" data-en>TV + PHONES</div></div></div><div class="gdesc" data-ar>شاهد اللعبة على التلفزيون — كل لاعب يجاوب من هاتفه مثل برامج المسابقات!</div><div class="gdesc" data-en>Watch the game on TV — each player answers from their phone like a quiz show!</div><div class="gpl"><div class="gdot" style="background:var(--c1)"></div><span data-ar>2-20 لاعب • من المتصفح</span><span data-en>2-20 players • via browser</span></div></div>
+    </div>
+  </div>
+  <div class="apanel" id="pg">
+    <div class="ahero g rv"><div class="ahbg">🎮</div><div class="ahc"><span class="alabl" data-ar>ميدان الألعاب</span><span class="alabl" data-en>GAMES ARENA</span><h3 class="ahtitle" data-ar>العب ألعابك المفضلة</h3><h3 class="ahtitle" data-en>Play Your Favorite Games</h3><p class="ahdesc" data-ar>من البلوت والدومينو إلى كودنيمز والمافيا — كل الألعاب الاجتماعية في مكان واحد.</p><p class="ahdesc" data-en>From Baloot and Domino to Codenames and Mafia — all social games in one place.</p><div class="chips"><span class="chip" data-ar>🃏 ورق خليجي</span><span class="chip" data-en>🃏 Gulf Cards</span><span class="chip" data-ar>🧩 استراتيجي</span><span class="chip" data-en>🧩 Strategy</span><span class="chip" data-ar>🎭 أدوار</span><span class="chip" data-en>🎭 Roles</span><span class="chip" data-ar>🤔 من أنا؟</span><span class="chip" data-en>🤔 Who Am I?</span><span class="chip" data-ar>🖊️ إبداعي</span><span class="chip" data-en>🖊️ Creative</span></div></div><div class="ahv" style="filter:drop-shadow(0 0 40px rgba(255,45,120,0.4))">🎮</div></div>
+    <div class="ggrid">
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🎴</div><div><div class="gname" data-ar>البلوت</div><div class="gname" data-en>Baloot</div><div class="gmode" data-ar>ورق خليجي</div><div class="gmode" data-en>GULF CARD GAME</div></div></div><div class="gdesc" data-ar>لعبة الورق الخليجية الأشهر — فريقان يتنافسان. العب مع أصدقائك أو ضد بوتات ذكية.</div><div class="gdesc" data-en>The most famous Gulf card game — two teams compete. Play with friends or against smart bots.</div><div class="gpl"><div class="gdot"></div><span data-ar>4 لاعبين • فريقين</span><span data-en>4 players • 2 teams</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🎴</div><div><div class="gname" data-ar>كوت بو 6</div><div class="gname" data-en>Kout Bo 6</div><div class="gmode" data-ar>ورق خليجي</div><div class="gmode" data-en>GULF CARD GAME</div></div></div><div class="gdesc" data-ar>النسخة الأصعب — فريق يحاول يكوت الثاني بالكامل. لحظات توتر لا مثيل لها!</div><div class="gdesc" data-en>The harder version — one team tries to sweep the other completely. Unmatched tension!</div><div class="gpl"><div class="gdot"></div><span data-ar>4 لاعبين • فريقين</span><span data-en>4 players • 2 teams</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🁣</div><div><div class="gname" data-ar>دومينو</div><div class="gname" data-en>Domino</div><div class="gmode" data-ar>كلاسيك</div><div class="gmode" data-en>CLASSIC</div></div></div><div class="gdesc" data-ar>الدومينو الكلاسيكي مع واجهة جميلة ورسوم متحركة سلسة وبوتات ذكية.</div><div class="gdesc" data-en>Classic Domino with a beautiful interface, smooth animations and smart bots.</div><div class="gpl"><div class="gdot"></div><span data-ar>2-4 لاعبين</span><span data-en>2-4 players</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">✖️</div><div><div class="gname">XO</div><div class="gmode" data-ar>إكس أو</div><div class="gmode" data-en>TIC-TAC-TOE</div></div></div><div class="gdesc" data-ar>إكس أو مع بوت Minimax — صعوبة حقيقية. أو العب مع صديق على نفس الجهاز.</div><div class="gdesc" data-en>XO with Minimax bot — real challenge. Or play with a friend on the same device.</div><div class="gpl"><div class="gdot"></div><span data-ar>لاعب أو لاعبان</span><span data-en>1 or 2 players</span></div><div class="gtags"><span class="gtag">Minimax AI</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🔍</div><div><div class="gname" data-ar>كودنيمز</div><div class="gname" data-en>Codenames</div><div class="gmode" data-ar>كلمة + رقم</div><div class="gmode" data-en>WORD + NUMBER</div></div></div><div class="gdesc" data-ar>فريقان — كل قائد يعطي تلميح كلمة واحدة ورقم، وفريقه يخمن الكلمات الصح.</div><div class="gdesc" data-en>Two teams — each spymaster gives a one-word clue and number, team guesses the right words.</div><div class="gpl"><div class="gdot"></div><span data-ar>4+ لاعبين • فريقين</span><span data-en>4+ players • 2 teams</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">😂</div><div><div class="gname" data-ar>بولشيت</div><div class="gname" data-en>Bullshit</div><div class="gmode" data-ar>لعبة الخداع</div><div class="gmode" data-en>DECEPTION GAME</div></div></div><div class="gdesc" data-ar>العب أوراقك وتقدر تكذب — بس إذا شك أحد فيك وصح، تاخذ كل الكومة!</div><div class="gdesc" data-en>Play your cards and you can lie — but if someone calls your bluff, you take the pile!</div><div class="gpl"><div class="gdot"></div><span data-ar>3-8 لاعبين</span><span data-en>3-8 players</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🤔</div><div><div class="gname" data-ar>من أنا؟</div><div class="gname" data-en>Who Am I?</div><div class="gmode" data-ar>خمّن الشخصية</div><div class="gmode" data-en>GUESS THE CHARACTER</div></div></div><div class="gdesc" data-ar>شخصية على جبهتك — اسأل أسئلة بنعم/لا لتخمين من أنت! 450+ شخصية في 9 فئات مختلفة.</div><div class="gdesc" data-en>A character on your forehead — ask yes/no questions to guess who you are! 450+ characters across 9 categories.</div><div class="gpl"><div class="gdot"></div><span data-ar>3+ لاعبين • 9 فئات</span><span data-en>3+ players • 9 categories</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🎭</div><div><div class="gname" data-ar>المافيا</div><div class="gname" data-en>Mafia</div><div class="gmode" data-ar>أدوار سرية</div><div class="gmode" data-en>SECRET ROLES</div></div></div><div class="gdesc" data-ar>المواطنون ضد المافيا — المحقق، الدكتور، المواطن، المافيا. من ستكشف الليلة؟</div><div class="gdesc" data-en>Citizens vs Mafia — Detective, Doctor, Citizen, Mafia. Who will you unmask tonight?</div><div class="gpl"><div class="gdot"></div><span data-ar>5-12 لاعب</span><span data-en>5-12 players</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🖊️</div><div><div class="gname" data-ar>ارسم وخمّن</div><div class="gname" data-en>Draw &amp; Guess</div><div class="gmode" data-ar>إبداعي</div><div class="gmode" data-en>CREATIVE</div></div></div><div class="gdesc" data-ar>لاعب يرسم وباقي الفريق يخمن — ضحك مضمون!</div><div class="gdesc" data-en>One player draws and the rest guess — guaranteed laughs!</div><div class="gpl"><div class="gdot"></div><span data-ar>3+ لاعبين</span><span data-en>3+ players</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🎬</div><div><div class="gname" data-ar>مثّل وخمّن</div><div class="gname" data-en>Act It Out</div><div class="gmode" data-ar>تمثيل صامت</div><div class="gmode" data-en>SILENT ACTING</div></div></div><div class="gdesc" data-ar>بدون كلام وبدون أصوات — مثّل وخلّ فريقك يخمن قبل انتهاء الوقت!</div><div class="gdesc" data-en>No words, no sounds — act out and let your team guess before time runs out!</div><div class="gpl"><div class="gdot"></div><span data-ar>2+ فريقين</span><span data-en>2+ teams</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🍀</div><div><div class="gname" data-ar>الحقيقة أو التحدي</div><div class="gname" data-en>Truth or Dare</div><div class="gmode" data-ar>اجتماعي</div><div class="gmode" data-en>SOCIAL</div></div></div><div class="gdesc" data-ar>الكلاسيكي الشهير — حقيقة تكشف نفسك أو تحدي تثبت شجاعتك.</div><div class="gdesc" data-en>The classic — truth reveals yourself or dare proves your courage.</div><div class="gpl"><div class="gdot"></div><span data-ar>3+ لاعبين</span><span data-en>3+ players</span></div></div>
+      <div class="gc gcx rv"><div class="gtop"><div class="gem">🙅</div><div><div class="gname" data-ar>ما فعلتها أبداً</div><div class="gname" data-en>Never Have I Ever</div><div class="gmode" data-ar>كشف الأسرار</div><div class="gmode" data-en>REVEAL SECRETS</div></div></div><div class="gdesc" data-ar>"ما فعلت أبداً..." — من فعلها يخسر نقطة! تكشف الكثير عن أصدقائك.</div><div class="gdesc" data-en>"Never have I ever..." — whoever did it loses a point! Reveals a lot about friends.</div><div class="gpl"><div class="gdot"></div><span data-ar>3+ لاعبين</span><span data-en>3+ players</span></div></div>
+      <div class="gc gcx rv" style="border-color:rgba(0,255,209,0.12)"><div class="gtop"><div class="gem" style="background:rgba(0,255,209,0.1);border:1px solid rgba(0,255,209,0.16)">✨</div><div><div class="gname" data-ar>المزيد قريباً</div><div class="gname" data-en>More Coming Soon</div><div class="gmode" data-ar>قيد التطوير</div><div class="gmode" data-en>IN DEVELOPMENT</div></div></div><div class="gdesc" data-ar>بوكر، الكلمة المميتة، بيلوت وألعاب جديدة تضاف باستمرار!</div><div class="gdesc" data-en>Poker, Killer Word, Biloot and more games added regularly!</div><div class="gpl"><div class="gdot" style="background:var(--c1)"></div><span data-ar>قيد التطوير</span><span data-en>In development</span></div></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="feats" id="feats">
+<div class="w">
+  <p class="stag" data-ar>لماذا Arena؟</p><p class="stag" data-en>WHY ARENA?</p>
+  <h2 class="sh" data-ar>مميزات <em>لا مثيل لها</em></h2><h2 class="sh" data-en>Features <em>Like No Other</em></h2>
+  <p class="sp" data-ar>منصة متكاملة مبنية بعناية لتناسب كل تجمع</p><p class="sp" data-en>A complete platform built to suit every gathering</p>
+  <div class="fgrid">
+    <div class="fc f1 rv"><div class="fic">🔗</div><div class="fn" data-ar>غرف خاصة فورية</div><div class="fn" data-en>Instant Private Rooms</div><div class="fd" data-ar>كل لعبة تولّد كود 6 أحرف فريد — شاركه وينضمون في ثوانٍ.</div><div class="fd" data-en>Every game generates a unique 6-character code — share it and they join in seconds.</div></div>
+    <div class="fc f2 rv"><div class="fic">⚡</div><div class="fn" data-ar>مزامنة لحظية</div><div class="fn" data-en>Real-time Sync</div><div class="fd" data-ar>Firebase Realtime Database يضمن تزامن فوري — كل حركة تظهر للجميع في نفس اللحظة.</div><div class="fd" data-en>Firebase Realtime Database ensures instant sync — every move appears to everyone simultaneously.</div></div>
+    <div class="fc f3 rv"><div class="fic">🤖</div><div class="fn" data-ar>بوتات ذكية</div><div class="fn" data-en>Smart Bots</div><div class="fd" data-ar>ما لقيت لاعبين؟ البوتات تملأ الفراغات بعد 60 ثانية بتأخيرات واقعية.</div><div class="fd" data-en>Can't find players? Bots fill empty seats after 60 seconds with realistic delays.</div></div>
+    <div class="fc f4 rv"><div class="fic">👥</div><div class="fn" data-ar>أصدقاء ودردشة</div><div class="fn" data-en>Friends & Chat</div><div class="fd" data-ar>أضف أصدقاء، راسلهم، وابدأ لعبة مباشرة من المحادثة.</div><div class="fd" data-en>Add friends, message them, start a game directly from the conversation.</div></div>
+    <div class="fc f5 rv"><div class="fic">🎁</div><div class="fn" data-ar>مكافآت وتوكن</div><div class="fn" data-en>Rewards & Tokens</div><div class="fd" data-ar>مكافآت يومية، نظام إحالة (50 توكن لكل صديق)، وتوكن على كل انتصار.</div><div class="fd" data-en>Daily rewards, referral system (50 tokens per friend), tokens for every victory.</div></div>
+    <div class="fc f6 rv"><div class="fic">📺</div><div class="fn" data-ar>وضع التلفزيون</div><div class="fn" data-en>TV Mode</div><div class="fd" data-ar>شاهد اللعبة على الشاشة الكبيرة — هاتفك ريموت وكل شخص يجاوب من جهازه.</div><div class="fd" data-en>Watch the game on the big screen — your phone is the remote and everyone answers from their device.</div></div>
+  </div>
+</div>
+</section>
+
+<section class="dlsec" id="dl">
+<div class="w">
+  <p class="stag" data-ar>حمّل الآن</p><p class="stag" data-en>DOWNLOAD NOW</p>
+  <h2 class="sh" data-ar>جاهز <em>للمنافسة؟</em></h2><h2 class="sh" data-en>Ready to <em>Compete?</em></h2>
+  <p class="sp" data-ar>حمّل Arena مجاناً وابدأ رحلتك في الميدان</p><p class="sp" data-en>Download Arena for free and start your journey in the arena</p>
+  <div class="dlbtns">
+    <a href="#" class="dlb" onclick="ev(event,'Google Play')"><div class="dlic">▶</div><div class="dlt"><small data-ar>متوفر على</small><small data-en>GET IT ON</small><strong>Google Play</strong></div></a>
+    <a href="#" class="dlb soon"><div class="dlic">🍎</div><div class="dlt"><small data-ar>قريباً على</small><small data-en>COMING SOON ON</small><strong>App Store</strong></div></a>
+  </div>
+  <p class="dlnote" data-ar>• مجاني لنظام Android •</p><p class="dlnote" data-en>• FREE for Android •</p>
+</div>
+</section>
+
+<footer>
+<div class="fg">
+  <div class="fbrand">
+    <div class="flogo">ARENA</div>
+    <p data-ar>منصة ألعاب اجتماعية عربية تجمع أصدقاءك وعائلتك في تجارب لا تُنسى.</p>
+    <p data-en>An Arabic social gaming platform bringing friends and family together in unforgettable experiences.</p>
+    <!-- ARNEX STUDIO BADGE -->
+    <a href="https://arnex.studio" class="arnex-badge" target="_blank">
+      <span style="font-size:0.7rem;color:var(--txt2);-webkit-text-fill-color:var(--txt2)" data-ar>مقدّم من</span>
+      <span style="font-size:0.7rem;color:var(--txt2);-webkit-text-fill-color:var(--txt2)" data-en>by</span>
+      <span class="arnex-badge-logo">ARNEX</span>
+      <span class="arnex-badge-sub">STUDIO</span>
+    </a>
+    <div class="socrow">
+      <a class="soc" href="#">𝕏</a><a class="soc" href="#">📸</a><a class="soc" href="#">🎵</a><a class="soc" href="#">✉</a>
+    </div>
+  </div>
+  <div>
+    <div class="fct" data-ar>التطبيق</div><div class="fct" data-en>APP</div>
+    <ul class="fl">
+      <li><a href="#arenas" data-ar>الميادين</a><a href="#arenas" data-en>Arenas</a></li>
+      <li><a href="#feats" data-ar>المميزات</a><a href="#feats" data-en>Features</a></li>
+      <li><a href="#dl" data-ar>التحميل</a><a href="#dl" data-en>Download</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="fct" data-ar>الدعم</div><div class="fct" data-en>SUPPORT</div>
+    <ul class="fl">
+      <li><a href="mailto:support@arnex.studio" data-ar>تواصل معنا</a><a href="mailto:support@arnex.studio" data-en>Contact Us</a></li>
+      <li><a href="#" data-ar>الأسئلة الشائعة</a><a href="#" data-en>FAQ</a></li>
+      <li><a href="#" data-ar>اقتراح لعبة</a><a href="#" data-en>Suggest a Game</a></li>
+      <li><a href="#" data-ar>الإبلاغ عن مشكلة</a><a href="#" data-en>Report Issue</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="fct" data-ar>قانوني</div><div class="fct" data-en>LEGAL</div>
+    <ul class="fl">
+      <li><a href="#" data-ar>سياسة الخصوصية</a><a href="#" data-en>Privacy Policy</a></li>
+      <li><a href="#" data-ar>شروط الاستخدام</a><a href="#" data-en>Terms of Use</a></li>
+      <li><a href="https://arnex.studio" data-ar>عن Arnex Studio</a><a href="https://arnex.studio" data-en>About Arnex Studio</a></li>
+    </ul>
+  </div>
+</div>
+<div class="fbot">
+  <span class="fcp" data-ar>© 2026 <a href="https://arnex.studio">Arnex Studio</a> · جميع الحقوق محفوظة · Arena</span>
+  <span class="fcp" data-en>© 2026 <a href="https://arnex.studio">Arnex Studio</a> · All Rights Reserved · Arena</span>
+  <div class="flg">
+    <a href="#" data-ar>الخصوصية</a><a href="#" data-en>Privacy</a>
+    <a href="#" data-ar>الشروط</a><a href="#" data-en>Terms</a>
+    <a href="mailto:support@arnex.studio" data-ar>تواصل</a><a href="mailto:support@arnex.studio" data-en>Contact</a>
+  </div>
+</div>
+</footer>
+
+<div class="mov" id="mov" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="mbox"><div class="mic" id="mi">🎮</div><div class="mtt" id="mt"></div><div class="mtx" id="mx"></div>
+    <button class="mbtn" onclick="document.getElementById('mov').classList.remove('on')" data-ar>حسناً</button>
+    <button class="mbtn" onclick="document.getElementById('mov').classList.remove('on')" data-en>OK</button>
+  </div>
+</div>
+
+<script>
+(()=>{const c=document.getElementById('stars'),x=c.getContext('2d');let W,H,S=[];const init=()=>{W=c.width=innerWidth;H=c.height=innerHeight;S=Array.from({length:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+0.2,a:Math.random(),da:(Math.random()-0.5)*0.006,vx:(Math.random()-0.5)*0.07,vy:(Math.random()-0.5)*0.07}))};const draw=()=>{x.clearRect(0,0,W,H);S.forEach(s=>{s.a+=s.da;if(s.a<=0||s.a>=1)s.da*=-1;s.x+=s.vx;s.y+=s.vy;if(s.x<0)s.x=W;if(s.x>W)s.x=0;if(s.y<0)s.y=H;if(s.y>H)s.y=0;x.beginPath();x.arc(s.x,s.y,s.r,0,Math.PI*2);x.fillStyle=`rgba(0,255,209,${s.a*0.35})`;x.fill()});requestAnimationFrame(draw)};init();draw();addEventListener('resize',init)})();
+document.addEventListener('mousemove',e=>{document.body.style.setProperty('--mx',e.clientX+'px');document.body.style.setProperty('--my',e.clientY+'px')});
+let lang='ar';
+function tl(){lang=lang==='ar'?'en':'ar';document.body.classList.toggle('en',lang==='en');document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';document.getElementById('lf').textContent=lang==='en'?'🇺🇸':'🇸🇦';document.getElementById('ll').textContent=lang==='en'?'AR':'EN'}
+function sa(t){document.getElementById('pk').classList.toggle('on',t==='k');document.getElementById('pg').classList.toggle('on',t==='g');['tbk','tbk2','tbg','tbg2'].forEach(id=>{const el=document.getElementById(id);if(!el)return;el.className='atab';if((t==='k'&&(id==='tbk'||id==='tbk2'))||(t==='g'&&(id==='tbg'||id==='tbg2')))el.className='atab a'+t});document.querySelectorAll('#p'+t+' .rv').forEach(el=>{el.classList.remove('in');setTimeout(()=>el.classList.add('in'),50)})}
+function dj(){const v=document.getElementById('ci').value.trim();if(v.length<4){modal('⚠️',lang==='ar'?'كود غير صحيح':'Invalid Code',lang==='ar'?'الرجاء إدخال كود الغرفة (6 أحرف)':'Please enter the room code (6 characters)');return}modal('🚀',lang==='ar'?'جاري الانضمام...':'Joining...',lang==='ar'?`سيتم توجيهك لغرفة ${v} — افتح التطبيق للانضمام`:`Heading to room ${v} — open the app to join`)}
+function ev(e,p){e.preventDefault();modal('🚀',lang==='ar'?'قريباً!':'Coming Soon!',lang==='ar'?`Arena سيتوفر على ${p} قريباً!`:`Arena will be available on ${p} soon!`)}
+function modal(ic,tt,tx){document.getElementById('mi').textContent=ic;document.getElementById('mt').textContent=tt;document.getElementById('mx').textContent=tx;document.getElementById('mov').classList.add('on')}
+const ro=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:0.07});
+document.querySelectorAll('.rv').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
+ 
